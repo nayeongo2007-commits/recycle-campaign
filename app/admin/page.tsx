@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import Link from 'next/link'
 
-const ADMIN_PASSWORD = 'recycle2024'
+const ADMIN_PASSWORD = '2624'
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState(false)

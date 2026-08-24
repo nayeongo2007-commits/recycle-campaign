@@ -2,14 +2,14 @@ import Link from 'next/link'
 
 export default function AboutPage() {
   const reasons = [
-    { title: '플라스틱 매립 감소', desc: '화장품 용기는 복합 재질로 이루어져 일반 재활용이 어렵습니다. 공병 수거를 통해 전문적으로 처리하면 매립 및 소각을 크게 줄일 수 있습니다.' },
-    { title: '탄소 배출 절감', desc: '공병 1개를 재활용하면 약 8g의 CO2 배출을 줄일 수 있습니다. 작은 실천이 모이면 큰 변화를 만들어낼 수 있습니다.' },
+    { title: '플라스틱 매립 감소', desc: '화장품 용기는 복합 재질로 이루어져 일반 재활용이 어렵습니다. 공병 수거를 통해 재활용하여 매립 및 소각을 줄일 수 있습니다.' },
+    { title: '탄소 배출 절감', desc: '공병 1kg을 재활용한다면 약 2.8kg CO_2 e를 감축할 수 있습니다.' },
     { title: '자원 순환', desc: '재활용된 플라스틱은 새로운 제품의 원료로 사용되어 자원의 선순환을 만들어냅니다.' },
   ]
   const steps = [
     '다 쓴 화장품 공병을 모아주세요. 브랜드 상관없이 수거 가능합니다.',
     '중앙대학교 또는 건국대학교 기숙사에 설치된 공병 수거함에 넣어주세요.',
-    '수거된 공병은 아모레 리사이클 캠페인을 통해 전문적으로 재활용됩니다.',
+    '수거된 공병은 아모레 리사이클 캠페인을 통해 재활용됩니다.',
   ]
   return (
     <main className="min-h-screen bg-gray-50">
@@ -23,7 +23,7 @@ export default function AboutPage() {
       <div className="max-w-2xl mx-auto px-6 py-10 space-y-8">
         <div className="bg-white rounded-xl border p-6">
           <h2 className="text-base font-medium text-gray-900 mb-3">아모레 리사이클이란?</h2>
-          <p className="text-sm text-gray-600 leading-relaxed">아모레 리사이클은 아모레퍼시픽이 운영하는 공병 수거 재활용 캠페인입니다. 다 쓴 화장품 공병을 매장이나 수거함에 반납하면 세척 및 분쇄하여 새로운 플라스틱 원료로 재탄생시킵니다.</p>
+          <p className="text-sm text-gray-600 leading-relaxed">아모레 리사이클은 아모레퍼시픽이 운영하는 공병 수거 캠페인입니다. 다 쓴 화장품 공병을 세척 후 반납하면 새로운 플라스틱 원료로 재탄생시킵니다.</p>
         </div>
         <div className="bg-white rounded-xl border p-6">
           <h2 className="text-base font-medium text-gray-900 mb-4">공병 재활용이 왜 중요한가요?</h2>

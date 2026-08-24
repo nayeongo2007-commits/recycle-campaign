@@ -52,4 +52,26 @@ export default function AboutPage() {
               <span className="bg-green-100 text-green-700 text-xs font-medium rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
               <p className="text-sm text-gray-600">중앙대학교 또는 건국대학교 기숙사에 설치된 공병 수거함에 넣어주세요.</p>
             </div>
-            <div className="flex
+            <div className="flex gap-3">
+              <span className="bg-green-100 text-green-700 text-xs font-medium rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+              <p className="text-sm text-gray-600">수거된 공병은 아모레 리사이클 캠페인을 통해 전문적으로 재활용됩니다.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-green-50 rounded-xl border border-green-200 p-6 text-center">
+          <p className="text-sm text-green-800 font-medium mb-1">아모레 리사이클 공식 캠페인</p>
+          <p className="text-sm text-green-700 mb-3">더 자세한 내용은 아모레퍼시픽 공식 사이트에서 확인하세요</p>
+          <Link
+            href="https://www.amoremall.com/kr/ko/display/event_detail?planDisplaySn=13143"
+            target="_blank"
+            className="inline-block bg-green-600 text-white text-sm rounded-lg px-4 py-2 hover:bg-green-700"
+          >
+            공식 사이트 바로가기
+          </Link>
+        </div>
+
+      </div>
+    </main>
+  )
+}

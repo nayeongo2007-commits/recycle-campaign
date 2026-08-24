@@ -9,21 +9,21 @@ export default function AboutPage() {
   const steps = [
     '다 쓴 화장품 공병을 모아주세요. 브랜드 상관없이 수거 가능합니다.',
     '중앙대학교 또는 건국대학교 기숙사에 설치된 공병 수거함에 넣어주세요.',
-    '수거된 공병은 아모레 리사이클 캠페인을 통해 재활용됩니다.',
+    '수거된 공병은 아모레리사이클 캠페인을 통해 재활용됩니다.',
   ]
   return (
     <main className="min-h-screen bg-gray-50">
       <nav className="bg-white border-b px-6 py-4 flex justify-between items-center">
         <div>
-          <h1 className="text-lg font-medium text-gray-900">아모레 리사이클 캠페인</h1>
+          <h1 className="text-lg font-medium text-gray-900">아모레리사이클 캠페인</h1>
           <p className="text-sm text-gray-500">캠페인 소개</p>
         </div>
         <Link href="/" className="text-sm text-gray-600 hover:text-gray-900">대시보드로</Link>
       </nav>
       <div className="max-w-2xl mx-auto px-6 py-10 space-y-8">
         <div className="bg-white rounded-xl border p-6">
-          <h2 className="text-base font-medium text-gray-900 mb-3">아모레 리사이클이란?</h2>
-          <p className="text-sm text-gray-600 leading-relaxed">아모레 리사이클은 아모레퍼시픽이 운영하는 공병 수거 캠페인입니다. 다 쓴 화장품 공병을 세척 후 반납하면 새로운 플라스틱 원료로 재탄생시킵니다.</p>
+          <h2 className="text-base font-medium text-gray-900 mb-3">아모레도지구인이란?</h2>
+          <p className="text-sm text-gray-600 leading-relaxed">아모레도지구인은 아모레리사이클과 연계하여 화장품 공병을 수거하는 캠페인입니다. 수거된 용기는 아모레리사이클을 통해 새로운 용기에 쓰이거나 산업용 플라스틱 등으로 재활용됩니다.</p>
         </div>
         <div className="bg-white rounded-xl border p-6">
           <h2 className="text-base font-medium text-gray-900 mb-4">공병 재활용이 왜 중요한가요?</h2>
@@ -48,7 +48,7 @@ export default function AboutPage() {
           </div>
         </div>
         <div className="bg-green-50 rounded-xl border border-green-200 p-6 text-center">
-          <p className="text-sm text-green-800 font-medium mb-1">아모레 리사이클 공식 캠페인</p>
+          <p className="text-sm text-green-800 font-medium mb-1">아모레리사이클 캠페인</p>
           <p className="text-sm text-green-700 mb-3">더 자세한 내용은 아모레퍼시픽 공식 사이트에서 확인하세요</p>
           <Link href="https://www.amoremall.com/kr/ko/display/event_detail?planDisplaySn=13143" target="_blank" className="inline-block bg-green-600 text-white text-sm rounded-lg px-4 py-2 hover:bg-green-700">공식 사이트 바로가기</Link>
         </div>

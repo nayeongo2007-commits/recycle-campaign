@@ -1,69 +1,107 @@
-import Image from "next/image";
+'use client'
+
+import { useEffect, useState } from 'react'
+import { supabase } from './lib/supabase'
+import Link from 'next/link'
 
 export default function Home() {
+  const [universities, setUniversities] = useState<any[]>([])
+  const [dormitories, setDormitories] = useState<any[]>([])
+  const [collections, setCollections] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  async function fetchData() {
+    const { data: univs } = await supabase.from('universities').select('*')
+    const { data: dorms } = await supabase.from('dormitories2').select('*, universities(name)')
+    const { data: cols } = await supabase.from('collections2').select('*, dormitories2(name, university_id)')
+    setUniversities(univs || [])
+    setDormitories(dorms || [])
+    setCollections(cols || [])
+    setLoading(false)
+  }
+
+  const totalAll = collections.reduce((sum, c) => sum + c.quantity, 0)
+  const categories = ['스킨케어', '샴푸/린스', '바디워시', '헤어케어']
+
+  function getUnivTotal(univId: number) {
+    const univDorms = dormitories.filter(d => d.university_id === univId).map(d => d.id)
+    return collections.filter(c => univDorms.includes(c.dormitory_id)).reduce((sum, c) => sum + c.quantity, 0)
+  }
+
+  function getUnivCategoryTotal(univId: number, cat: string) {
+    const univDorms = dormitories.filter(d => d.university_id === univId).map(d => d.id)
+    return collections.filter(c => univDorms.includes(c.dormitory_id) && c.category === cat).reduce((sum, c) => sum + c.quantity, 0)
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-gray-50">
+      <nav className="bg-white border-b px-6 py-4 flex justify-between items-center">
+        <div>
+          <h1 className="text-lg font-medium text-gray-900">아모레 리사이클 캠페인</h1>
+          <p className="text-sm text-gray-500">중앙대학교 · 건국대학교 공병 수거 현황</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="flex gap-4">
+          <Link href="/about" className="text-sm text-gray-600 hover:text-gray-900">캠페인 소개</Link>
+          <Link href="/admin" className="text-sm text-green-600 hover:text-green-800">관리자</Link>
         </div>
-      </main>
-    </div>
-  );
+      </nav>
+
+      <div className="max-w-4xl mx-auto px-6 py-8">
+        {loading ? (
+          <p className="text-center text-gray-500">불러오는 중...</p>
+        ) : (
+          <>
+            <div className="bg-white rounded-xl p-5 border mb-8">
+              <p className="text-sm text-gray-500 mb-1">전체 누적 수거량</p>
+              <p className="text-3xl font-medium text-gray-900">{totalAll}<span className="text-base font-normal text-gray-500 ml-1">개</span></p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {universities.map(univ => {
+                const univDorms = dormitories.filter(d => d.university_id === univ.id)
+                const univTotal = getUnivTotal(univ.id)
+                const maxCat = Math.max(...categories.map(c => getUnivCategoryTotal(univ.id, c)), 1)
+                return (
+                  <div key={univ.id} className="bg-white rounded-xl border p-5">
+                    <h2 className="text-sm font-medium text-gray-700 mb-1">{univ.name}</h2>
+                    <p className="text-3xl font-medium text-gray-900 mb-4">{univTotal}<span className="text-base font-normal text-gray-500 ml-1">개</span></p>
+
+                    <div className="mb-4">
+                      {univDorms.map(dorm => {
+                        const count = collections.filter(c => c.dormitory_id === dorm.id).reduce((sum, c) => sum + c.quantity, 0)
+                        return (
+                          <div key={dorm.id} className="flex justify-between text-sm py-1 border-b last:border-0">
+                            <span className="text-gray-600">{dorm.name}</span>
+                            <span className="font-medium text-gray-900">{count}개</span>
+                          </div>
+                        )
+                      })}
+                    </div>
+
+                    <p className="text-xs font-medium text-gray-500 mb-3">품목별 수거 현황</p>
+                    {categories.map(cat => {
+                      const count = getUnivCategoryTotal(univ.id, cat)
+                      return (
+                        <div key={cat} className="flex items-center gap-3 mb-2">
+                          <span className="text-xs text-gray-600 w-16">{cat}</span>
+                          <div className="flex-1 bg-gray-100 rounded-full h-1.5">
+                            <div className="bg-green-500 h-1.5 rounded-full" style={{ width: `${(count / maxCat) * 100}%` }}></div>
+                          </div>
+                          <span className="text-xs font-medium text-gray-900 w-8 text-right">{count}개</span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )
+              })}
+            </div>
+          </>
+        )}
+      </div>
+    </main>
+  )
 }
